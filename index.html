@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Starter Boilerplate</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- CSS STYLES -->
+    <style>
+        /* ==========================================================================
+           1. CSS VARIABLES (DESIGN TOKENS & THEMING)
+           Easily change colors, fonts, and spacing for quick branding customization.
+           ========================================================================== */
+        :root {
+            /* Brand Colors */
+            --primary: #4F46E5;        /* Primary Accent (Indigo) */
+            --primary-hover: #4338CA;  /* Darker Primary for Hover states */
+            --secondary: #06B6D4;      /* Secondary Accent (Cyan) */
+            --accent: #F59E0B;         /* Attention/Highlight Accent */
+
+            /* Background & Surface Colors */
+            --bg-body: #F9FAFB;        /* Main Page Background */
+            --bg-surface: #FFFFFF;     /* Cards, Modals, Header Background */
+            --bg-alt: #F3F4F6;         /* Alternative Section Background */
+
+            /* Text & Border Colors */
+            --text-main: #111827;      /* Primary Typography Color */
+            --text-muted: #4B5563;     /* Subtitles, Secondary Text */
+            --text-light: #9CA3AF;     /* Muted/Disabled Text */
+            --border-color: #E5E7EB;   /* Card Borders, Dividers */
+
+            /* Typography */
+            --font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            
+            /* Elevation & Shadows */
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+
+            /* Radii & Transitions */
+            --radius-sm: 6px;
+            --radius-md: 12px;
+            --radius-lg: 20px;
+            --radius-full: 9999px;
+            --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+
+            /* Container Max Width */
+            --container-width: 1200px;
+        }
+
+        /* Dark Mode Preferences Support */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-body: #0F172A;
+                --bg-surface: #1E293B;
+                --bg-alt: #1E293B;
+                --text-main: #F8FAFC;
+                --text-muted: #94A3B8;
+                --text-light: #64748B;
+                --border-color: #334155;
+            }
+        }
+
+        /* ==========================================================================
+           2. MODERN CSS RESET & BASE STYLES
+           ========================================================================== */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        button, input, textarea {
+            font-family: inherit;
+            font-size: inherit;
+            border: none;
+            outline: none;
+        }
+
+        /* ==========================================================================
+           3. REUSABLE UTILITIES & LAYOUT CONTAINERS
+           ========================================================================== */
+        .container {
+            width: 100%;
+            max-width: var(--container-width);
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .section {
+            padding: 5rem 0;
+        }
+
+        .section-alt {
+            background-color: var(--bg-alt);
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 650px;
+            margin: 0 auto 3.5rem auto;
+        }
+
+        .section-header h2 {
+            font-size: 2.25rem;
+            font-weight: 800;
+            letter-spacing: -0.025em;
+            margin-bottom: 0.75rem;
+            color: var(--text-main);
+        }
+
+        .section-header p {
+            color: var(--text-muted);
+            font-size: 1.125rem;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background-color: rgba(79, 70, 229, 0.1);
+            color: var(--primary);
+            border-radius: var(--radius-full);
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.85rem 1.75rem;
+            font-weight: 600;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: var(--transition);
+            gap: 0.5rem;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: #FFFFFF;
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(79, 70, 229, 0.4);
+        }
+
+        .btn-secondary {
+            background-color: var(--bg-surface);
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .btn-block {
+            width: 100%;
+        }
+
+        /* ==========================================================================
+           4. STICKY HEADER & NAVIGATION
+           ========================================================================== */
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background-color: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            transition: var(--transition);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .header {
+                background-color: rgba(30, 41, 59, 0.85);
+            }
+        }
+
+        .nav-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 4.5rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo span {
+            color: var(--primary);
+        }
+
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-link {
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        /* Mobile Hamburger Toggle */
+        .mobile-toggle {
+            display: none;
+            background: none;
+            cursor: pointer;
+            padding: 0.5rem;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .mobile-toggle span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background-color: var(--text-main);
+            transition: var(--transition);
+        }
+
+        /* ==========================================================================
+           5. HERO SECTION
+           ========================================================================== */
+        .hero {
+            padding: 6rem 0 5rem 0;
+            overflow: hidden;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.15;
+            letter-spacing: -0.03em;
+            margin-bottom: 1.25rem;
+        }
+
+        .hero-content h1 span {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-content p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            max-width: 520px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-card-preview {
+            position: relative;
+            background: var(--bg-surface);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            padding: 1.5rem;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .hero-card-preview img {
+            width: 100%;
+            height: 320px;
+            object-fit: cover;
+            border-radius: var(--radius-md);
+        }
+
+        .floating-badge {
+            position: absolute;
+            bottom: -1rem;
+            left: -1rem;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            padding: 1rem 1.25rem;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-md);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        /* ==========================================================================
+           6. FEATURES SECTION
+           ========================================================================== */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: var(--bg-surface);
+            padding: 2.5rem 2rem;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+            border-color: rgba(79, 70, 229, 0.3);
+        }
+
+        .feature-icon {
+            width: 54px;
+            height: 54px;
+            border-radius: var(--radius-md);
+            background: rgba(79, 70, 229, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+
+        .feature-card p {
+            color: var(--text-muted);
+            font-size: 0.975rem;
+        }
+
+        /* ==========================================================================
+           7. PORTFOLIO / SHOWCASE SECTION
+           ========================================================================== */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .portfolio-card {
+            background: var(--bg-surface);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .portfolio-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .portfolio-img {
+            width: 100%;
+            height: 200px;
+            background-color: var(--bg-alt);
+            object-fit: cover;
+        }
+
+        .portfolio-body {
+            padding: 1.5rem;
+        }
+
+        .portfolio-category {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+
+        .portfolio-body h3 {
+            font-size: 1.125rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .portfolio-body p {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+        }
+
+        .portfolio-link {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--primary);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .portfolio-link:hover {
+            gap: 0.5rem;
+        }
+
+        /* ==========================================================================
+           8. CONTACT & FORM SECTION
+           ========================================================================== */
+        .contact-wrapper {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--bg-surface);
+            padding: 2.5rem;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-main);
+        }
+
+        .form-input, .form-textarea {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            transition: var(--transition);
+        }
+
+        .form-input:focus, .form-textarea:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        /* ==========================================================================
+           9. FOOTER
+           ========================================================================== */
+        .footer {
+            background-color: var(--bg-surface);
+            border-top: 1px solid var(--border-color);
+            padding: 4rem 0 2rem 0;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr repeat(3, 1fr);
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-brand p {
+            color: var(--text-muted);
+            margin-top: 1rem;
+            max-width: 300px;
+            font-size: 0.9rem;
+        }
+
+        .footer-title {
+            font-size: 0.875rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 1.25rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        .footer-bottom {
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--text-light);
+            font-size: 0.875rem;
+        }
+
+        /* ==========================================================================
+           10. MEDIA QUERIES & RESPONSIVENESS
+           ========================================================================== */
+        @media (max-width: 1024px) {
+            .hero-content h1 {
+                font-size: 2.75rem;
+            }
+            .portfolio-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-toggle {
+                display: flex;
+            }
+
+            .nav-menu {
+                position: fixed;
+                top: 4.5rem;
+                left: 0;
+                right: 0;
+                background: var(--bg-surface);
+                flex-direction: column;
+                padding: 2rem;
+                border-bottom: 1px solid var(--border-color);
+                box-shadow: var(--shadow-lg);
+                display: none;
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .hero-grid {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+                text-align: center;
+            }
+
+            .hero-content p {
+                margin: 0 auto 2rem auto;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-content h1 {
+                font-size: 2.25rem;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ==========================================================================
+       HEADER / NAVIGATION
+       ========================================================================== -->
+    <header class="header">
+        <div class="container nav-container">
+            <!-- Brand Logo -->
+            <a href="#" class="logo">
+                🚀 <span>Launch</span>Pad
+            </a>
+
+            <!-- Navigation Links -->
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#features" class="nav-link">Features</a></li>
+                <li><a href="#portfolio" class="nav-link">Work</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+
+            <!-- Actions & Mobile Button -->
+            <div class="nav-actions">
+                <a href="#contact" class="btn btn-primary" style="padding: 0.6rem 1.25rem; font-size: 0.875rem;">Get Started</a>
+                <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ==========================================================================
+       HERO SECTION
+       ========================================================================== -->
+    <section class="hero">
+        <div class="container hero-grid">
+            <div class="hero-content">
+                <span class="badge">Speed up development</span>
+                <h1>Build Modern Websites <span>Faster than ever</span>.</h1>
+                <p>A lightweight, responsive, and customizable HTML/CSS starter boilerplate designed to launch your next idea in hours, not days.</p>
+                <div class="hero-buttons">
+                    <a href="#contact" class="btn btn-primary">Start Building Now →</a>
+                    <a href="#features" class="btn btn-secondary">Explore Features</a>
+                </div>
+            </div>
+
+            <div class="hero-card-preview">
+                <!-- Visual Placeholder Image -->
+                <img src="https://placehold.co/600x400/4F46E5/FFFFFF?text=Modern+UI+Preview" alt="Hero Mockup" onerror="this.onerror=null;this.src='https://via.placeholder.com/600x400';">
+                
+                <div class="floating-badge">
+                    <span style="font-size: 1.5rem;">⚡</span>
+                    <div>
+                        <div style="font-weight: 700; font-size: 0.9rem;">Fast Performance</div>
+                        <div style="font-size: 0.75rem; color: var(--text-muted);">Optimized for speed</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================================================
+       FEATURES SECTION
+       ========================================================================== -->
+    <section class="section section-alt" id="features">
+        <div class="container">
+            <div class="section-header">
+                <span class="badge">Capabilities</span>
+                <h2>Everything you need</h2>
+                <p>Designed with clean architecture and modern CSS standards so you can expand effortlessly.</p>
+            </div>
+
+            <div class="features-grid">
+                <!-- Feature 1 -->
+                <div class="feature-card">
+                    <div class="feature-icon">🎨</div>
+                    <h3>CSS Variables</h3>
+                    <p>Change your brand color, fonts, border radii, and theme styles instantly across the entire application.</p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3>Fully Responsive</h3>
+                    <p>Pre-configured media queries ensure fluid layout adjustments seamlessly across mobile, tablet, and desktop.</p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Zero Dependencies</h3>
+                    <p>Built with pure modern HTML & CSS. Fast load times, crisp rendering, and complete control over your code.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================================================
+       PORTFOLIO / SHOWCASE SECTION
+       ========================================================================== -->
+    <section class="section" id="portfolio">
+        <div class="container">
+            <div class="section-header">
+                <span class="badge">Showcase</span>
+                <h2>Featured Projects</h2>
+                <p>Take a look at some of the recent builds powered by this flexible boilerplate structure.</p>
+            </div>
+
+            <div class="portfolio-grid">
+                <!-- Card 1 -->
+                <div class="portfolio-card">
+                    <img class="portfolio-img" src="https://placehold.co/400x250/06B6D4/FFFFFF?text=Project+One" alt="Project 1" onerror="this.onerror=null;this.src='https://via.placeholder.com/400x250';">
+                    <div class="portfolio-body">
+                        <div class="portfolio-category">E-Commerce</div>
+                        <h3>SaaS Analytics App</h3>
+                        <p>A real-time metrics overview dashboard for web creators.</p>
+                        <a href="#" class="portfolio-link">View Case Study →</a>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="portfolio-card">
+                    <img class="portfolio-img" src="https://placehold.co/400x250/4F46E5/FFFFFF?text=Project+Two" alt="Project 2" onerror="this.onerror=null;this.src='https://via.placeholder.com/400x250';">
+                    <div class="portfolio-body">
+                        <div class="portfolio-category">Mobile App</div>
+                        <h3>Fitness Companion</h3>
+                        <p>Track daily workouts, diet plans, and health statistics effortless.</p>
+                        <a href="#" class="portfolio-link">View Case Study →</a>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="portfolio-card">
+                    <img class="portfolio-img" src="https://placehold.co/400x250/F59E0B/FFFFFF?text=Project+Three" alt="Project 3" onerror="this.onerror=null;this.src='https://via.placeholder.com/400x250';">
+                    <div class="portfolio-body">
+                        <div class="portfolio-category">Design System</div>
+                        <h3>UI Component Library</h3>
+                        <p>Accessible and flexible component kit built for web applications.</p>
+                        <a href="#" class="portfolio-link">View Case Study →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================================================
+       CONTACT SECTION
+       ========================================================================== -->
+    <section class="section section-alt" id="contact">
+        <div class="container">
+            <div class="section-header">
+                <span class="badge">Get in Touch</span>
+                <h2>Let's Start a Project</h2>
+                <p>Send a message below and we will get back to you within 24 hours.</p>
+            </div>
+
+            <div class="contact-wrapper">
+                <form id="contactForm" onsubmit="event.preventDefault(); alert('Message submitted successfully!');">
+                    <div class="form-group">
+                        <label class="form-label" for="name">Full Name</label>
+                        <input type="text" id="name" class="form-input" placeholder="John Doe" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="email">Email Address</label>
+                        <input type="email" id="email" class="form-input" placeholder="john@example.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="message">Your Message</label>
+                        <textarea id="message" class="form-textarea" placeholder="How can we help you?" required></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-block">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================================================
+       FOOTER
+       ========================================================================== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="#" class="logo">🚀 <span>Launch</span>Pad</a>
+                    <p>A modern boilerplate tailored for developers and designers who need fast execution without sacrificing code quality.</p>
+                </div>
+
+                <div>
+                    <h4 class="footer-title">Product</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Features</a></li>
+                        <li><a href="#">Templates</a></li>
+                        <li><a href="#">Integrations</a></li>
+                        <li><a href="#">Changelog</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="footer-title">Resources</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Documentation</a></li>
+                        <li><a href="#">Guides</a></li>
+                        <li><a href="#">API Reference</a></li>
+                        <li><a href="#">Community</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="footer-title">Company</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 LaunchPad. All rights reserved.</p>
+                <div style="display: flex; gap: 1rem;">
+                    <a href="#">Twitter</a>
+                    <a href="#">GitHub</a>
+                    <a href="#">LinkedIn</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- INTERACTIVE JAVASCRIPT -->
+    <script>
+        // Mobile Navigation Menu Toggle
+        const mobileToggle = document.getElementById('mobileToggle');
+        const navMenu = document.getElementById('navMenu');
+
+        mobileToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+
+        // Close menu when clicking a link on mobile
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>
